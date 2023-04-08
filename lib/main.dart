@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/features/home_weather/home_weather_view.dart';
 import 'package:weather_app/product/global/theme/dark_theme.dart';
 import 'package:weather_app/product/global/theme/light_theme.dart';
-
 import 'features/home_weather/settings_provider.dart';
 
 
@@ -24,7 +23,7 @@ class MyApp extends ConsumerWidget {
       title: 'Material App',
       theme: ref.watch(settingsProvider).isDarkTheme ? DarkTheme.darkTheme :LightTheme.lightTheme,
       debugShowCheckedModeBanner: false,
-        home:HomeWeatherView()
+        home:const HomeWeatherView()
     );
   }
 }

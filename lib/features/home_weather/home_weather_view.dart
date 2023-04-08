@@ -1,7 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_app/product/global/geoLocator/geoLocator_manager.dart';
+import 'package:weather_app/product/services/current_weather_service.dart';
+import '../../product/models/current_weather.dart';
 import 'settings_provider.dart';
 import '../../product/constants/index.dart';
+import 'package:geolocator/geolocator.dart';
 
 class HomeWeatherView extends ConsumerStatefulWidget {
   const HomeWeatherView({
@@ -13,6 +17,32 @@ class HomeWeatherView extends ConsumerStatefulWidget {
 }
 
 class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
+
+  late final _geoLocatorManager;
+
+  @override
+  void initState() {
+    super.initState();
+    _geoLocatorManager = GeoLocatorManager();
+
+  }
+
+Future<Weather?> getCurrentWeather()async {
+    final CurrentWeatherService _currentWeatherService = CurrentWeatherService();
+    Position position = _geoLocatorManager.determinePosition();
+    var lat = position.latitude.toString();
+    var lon = position.longitude.toString();
+    var response= _currentWeatherService.getWeather(lat, lon);
+    // position.then((value) {
+    //   String lat = value.latitude.toString();
+    //   String lon = value.longitude.toString();
+    // var response= _currentWeatherService.getWeather(lat, lon);
+    // return response;
+    // });
+    return response;
+
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,9 +68,17 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                'Home Weather',
-              ),
+             FutureBuilder(
+               future: getCurrentWeather(),
+               builder: (context, snapshot){
+                 if(snapshot.hasData){
+                   final weather =snapshot.data;
+                   return Text(weather!.description);
+                 }else{
+                   return Text('no data');
+                 }
+               },
+             )
             ],
           ),
         ));
@@ -98,4 +136,6 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
           );
         });
   }
+
+
 }
