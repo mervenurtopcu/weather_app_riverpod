@@ -1,10 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:weather_app/product/constants/color_constants.dart';
-
-import '../../product/constants/padding_constants.dart';
-import '../../product/constants/string_constants.dart';
 import 'settings_provider.dart';
+import '../../product/constants/index.dart';
 
 class HomeWeatherView extends ConsumerStatefulWidget {
   const HomeWeatherView({
