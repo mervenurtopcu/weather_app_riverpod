@@ -16,13 +16,5 @@ class DarkTheme {
         statusBarIconBrightness: Brightness.light,
       ),
     ),
-    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: Colors.black,
-      selectedItemColor: Colors.white,
-      unselectedItemColor: Colors.grey,
-    ),
-    textTheme: const TextTheme(
-
-    ),
   );
 }
