@@ -5,9 +5,8 @@ import 'package:flutter/services.dart';
 class LightTheme {
   LightTheme._();
 
-  final ThemeData lightTheme = ThemeData.light(
-      useMaterial3: true,
-
+  static final ThemeData lightTheme = ThemeData.light(
+    useMaterial3: true,
   ).copyWith(
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: const AppBarTheme(
@@ -18,12 +17,5 @@ class LightTheme {
         statusBarIconBrightness: Brightness.dark,
       ),
     ),
-    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: Colors.white,
-      selectedItemColor: Colors.black,
-      unselectedItemColor: Colors.grey,
-    ),
-    textTheme: const TextTheme(
-
-    ),);
+  );
 }

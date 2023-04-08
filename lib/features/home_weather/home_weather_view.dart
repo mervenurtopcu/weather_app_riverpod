@@ -19,7 +19,7 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
         title: const Text('Weather'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings),
+            icon: const Icon(Icons.nights_stay_outlined),
             onPressed: () {
               Navigator.push(
                 context,

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 class DarkTheme {
 
   DarkTheme._();
-  final ThemeData darkTheme = ThemeData.dark(
+  static final ThemeData darkTheme = ThemeData.dark(
     useMaterial3: true,
   ).copyWith(
     scaffoldBackgroundColor: Colors.black,

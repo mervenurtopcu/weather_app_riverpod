@@ -1,15 +1,16 @@
-import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+class SettingsProvider extends ChangeNotifier {
 
-class SettingsNotifier extends StateNotifier<SettingsState> {
-  SettingsNotifier() : super(SettingsState());
+  var isDarkTheme = false;
 
-
+  void setLightTheme() {
+    isDarkTheme = false;
+    notifyListeners();
+  }
+  void setDarkTheme() {
+    isDarkTheme = true;
+    notifyListeners();
+  }
 }
-class SettingsState extends Equatable {
-  @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
-
-
-}
+final settingsProvider = ChangeNotifierProvider((ref) => SettingsProvider());

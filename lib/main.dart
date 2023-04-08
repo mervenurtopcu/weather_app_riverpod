@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/features/home_weather/home_weather_view.dart';
+import 'package:weather_app/product/global/theme/dark_theme.dart';
+import 'package:weather_app/product/global/theme/light_theme.dart';
+
+import 'features/app_settings/settings_provider.dart';
 
 
 void main() {
@@ -16,8 +20,9 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Material App',
+      theme: ref.watch(settingsProvider).isDarkTheme ? DarkTheme.darkTheme :LightTheme.lightTheme,
       debugShowCheckedModeBanner: false,
         home:HomeWeatherView()
     );
