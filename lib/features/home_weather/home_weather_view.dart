@@ -1,11 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:weather_app/product/global/geoLocator/geoLocator_manager.dart';
-import 'package:weather_app/product/services/current_weather_service.dart';
+import 'package:weather_app/product/services/current_weather_manager.dart';
 import '../../product/models/current_weather.dart';
 import 'settings_provider.dart';
 import '../../product/constants/index.dart';
-import 'package:geolocator/geolocator.dart';
 
 class HomeWeatherView extends ConsumerStatefulWidget {
   const HomeWeatherView({
@@ -17,31 +15,13 @@ class HomeWeatherView extends ConsumerStatefulWidget {
 }
 
 class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
-
-  late final _geoLocatorManager;
-
+  late Future<Weather?> weather;
+  WeatherManager weatherManager = WeatherManager();
   @override
   void initState() {
     super.initState();
-    _geoLocatorManager = GeoLocatorManager();
-
+    weather = weatherManager.sendPositionToService();
   }
-
-Future<Weather?> getCurrentWeather()async {
-    final CurrentWeatherService _currentWeatherService = CurrentWeatherService();
-    Position position = _geoLocatorManager.determinePosition();
-    var lat = position.latitude.toString();
-    var lon = position.longitude.toString();
-    var response= _currentWeatherService.getWeather(lat, lon);
-    // position.then((value) {
-    //   String lat = value.latitude.toString();
-    //   String lon = value.longitude.toString();
-    // var response= _currentWeatherService.getWeather(lat, lon);
-    // return response;
-    // });
-    return response;
-
-}
 
   @override
   Widget build(BuildContext context) {
@@ -68,17 +48,24 @@ Future<Weather?> getCurrentWeather()async {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-             FutureBuilder(
-               future: getCurrentWeather(),
-               builder: (context, snapshot){
-                 if(snapshot.hasData){
-                   final weather =snapshot.data;
-                   return Text(weather!.description);
-                 }else{
-                   return Text('no data');
-                 }
-               },
-             )
+              FutureBuilder(
+                  future: weather,
+                  builder: (context,snapshot){
+                    if(snapshot.hasData){
+                      return Column(
+                        children: [
+                          Text(snapshot.data!.cityName),
+                          Text(snapshot.data!.description),
+                          Text(snapshot.data!.temperature.toString()),
+                          Text(snapshot.data!.humidity.toString()),
+                          Text(snapshot.data!.windSpeed.toString()),
+                          Image.network('https://openweathermap.org/img/w/${snapshot.data!.iconCode}.png'),
+                        ],
+                      );
+                    }else{
+                      return const CircularProgressIndicator();
+                    }
+              })
             ],
           ),
         ));
@@ -96,13 +83,13 @@ Future<Weather?> getCurrentWeather()async {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Divider(
-                      color:ColorsConstants.dividerColor,
+                      color: ColorsConstants.dividerColor,
                       thickness: 4,
                       indent: MediaQuery.of(context).size.width * 0.45,
                       endIndent: MediaQuery.of(context).size.width * 0.45,
                     ),
                     Text(
-                        StringConstants.darkMode,
+                      StringConstants.darkMode,
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall
@@ -136,6 +123,4 @@ Future<Weather?> getCurrentWeather()async {
           );
         });
   }
-
-
 }

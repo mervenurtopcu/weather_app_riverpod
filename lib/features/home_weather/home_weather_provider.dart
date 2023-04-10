@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:weather_app/product/services/current_weather_service.dart';
+import 'package:weather_app/product/services/network_service.dart';
 
 import '../../product/models/current_weather.dart';
 
