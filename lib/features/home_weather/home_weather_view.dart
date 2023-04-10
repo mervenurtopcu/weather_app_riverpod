@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:weather_app/product/services/current_weather_manager.dart';
@@ -17,6 +19,7 @@ class HomeWeatherView extends ConsumerStatefulWidget {
 class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
   late Future<Weather?> weather;
   WeatherManager weatherManager = WeatherManager();
+
   @override
   void initState() {
     super.initState();
@@ -25,48 +28,110 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Weather'),
-          actions: [
-            ref.watch(settingsProvider).isDarkTheme
-                ? IconButton(
-                    icon: const Icon(Icons.nights_stay_outlined),
-                    onPressed: () {
-                      _showModalBottomSheet(context);
-                    },
-                  )
-                : IconButton(
-                    icon: const Icon(Icons.wb_sunny_outlined),
-                    onPressed: () {
-                      _showModalBottomSheet(context);
-                    },
-                  )
-          ],
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              FutureBuilder(
-                  future: weather,
-                  builder: (context,snapshot){
-                    if(snapshot.hasData){
-                      return Column(
-                        children: [
-                          Text(snapshot.data!.cityName),
-                          Text(snapshot.data!.description),
-                          Text(snapshot.data!.temperature.toString()),
-                          Text(snapshot.data!.humidity.toString()),
-                          Text(snapshot.data!.windSpeed.toString()),
-                          Image.network('https://openweathermap.org/img/w/${snapshot.data!.iconCode}.png'),
-                        ],
-                      );
-                    }else{
-                      return const CircularProgressIndicator();
-                    }
-              })
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      decoration: ref.watch(settingsProvider).isDarkTheme
+          ? const BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage('assets/background_dark.jpg'),
+              ),
+            )
+          : const BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage('assets/background_light.jpg'),
+              ),
+            ),
+      child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            title: const Text('Weather'),
+            backgroundColor: Colors.transparent,
+            toolbarHeight: 150,
+            bottom: search_widget(),
+            actions: [
+              ref.watch(settingsProvider).isDarkTheme
+                  ? IconButton(
+                      icon: const Icon(Icons.nights_stay_outlined),
+                      onPressed: () {
+                        _showModalBottomSheet(context);
+                      },
+                    )
+                  : IconButton(
+                      icon: const Icon(Icons.wb_sunny_outlined),
+                      onPressed: () {
+                        _showModalBottomSheet(context);
+                      },
+                    )
             ],
+          ),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FutureBuilder(
+                    future: weather,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return Container(
+                          color: Colors.purple,
+                          // padding: const EdgeInsets.all(20),
+                          // margin: const EdgeInsets.all(20),
+                          child: Column(
+                            //crossAxisAlignment: CrossAxisAlignment.center,
+                            //mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(snapshot.data!.cityName,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.copyWith(
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.white)),
+                              Text('${snapshot.data!.temperature.toInt()}°',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displaySmall
+                                      ?.copyWith(
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.white70)),
+                              Text(' | ${snapshot.data!.description}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall
+                                      ?.copyWith(
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.white70)),
+
+                              // Text(snapshot.data!.humidity.toString()),
+                              // Text(snapshot.data!.windSpeed.toString()),
+                              // Image.network('https://openweathermap.org/img/w/${snapshot.data!.iconCode}.png'),
+                            ],
+                          ),
+                        );
+                      } else {
+                        return const CircularProgressIndicator();
+                      }
+                    })
+              ],
+            ),
+          )),
+    );
+  }
+
+  PreferredSize search_widget() {
+    return PreferredSize(
+        preferredSize: Size.fromHeight(50),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: TextField(
+            decoration: InputDecoration(
+                hintText: 'Search',
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10))),
           ),
         ));
   }
