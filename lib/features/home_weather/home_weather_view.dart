@@ -76,7 +76,7 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return Container(
-                          color: Colors.purple,
+                          color: Colors.transparent,
                           // padding: const EdgeInsets.all(20),
                           // margin: const EdgeInsets.all(20),
                           child: Column(
@@ -86,7 +86,7 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                               Text(snapshot.data!.cityName,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .titleLarge
+                                      .displaySmall
                                       ?.copyWith(
                                           fontWeight: FontWeight.w300,
                                           color: Colors.white)),
@@ -96,13 +96,13 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                                       .displaySmall
                                       ?.copyWith(
                                           fontWeight: FontWeight.w300,
-                                          color: Colors.white70)),
-                              Text(' | ${snapshot.data!.description}',
+                                          color: Colors.white)),
+                              Text(snapshot.data!.description,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .titleSmall
+                                      .titleMedium
                                       ?.copyWith(
-                                          fontWeight: FontWeight.w300,
+                                          fontWeight: FontWeight.w400,
                                           color: Colors.white70)),
 
                               // Text(snapshot.data!.humidity.toString()),
@@ -127,6 +127,10 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
+            style: Theme.of(context)
+                .textTheme
+                .titleSmall
+                ?.copyWith(color: Colors.white,fontWeight: FontWeight.normal),
             decoration: InputDecoration(
                 hintText: 'Search',
                 prefixIcon: const Icon(Icons.search),
