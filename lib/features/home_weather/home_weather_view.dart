@@ -45,10 +45,10 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
               ),
             ),
       child: Scaffold(
-          backgroundColor: Colors.transparent,
+          backgroundColor:ColorsConstants.transparent,
           appBar: AppBar(
-            title: const Text('Weather'),
-            backgroundColor: Colors.transparent,
+            title: const Text(StringConstants.appTitle),
+            backgroundColor: ColorsConstants.transparent,
             toolbarHeight: 150,
             bottom: search_widget(),
             actions: [
@@ -77,11 +77,7 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                       if (snapshot.hasData) {
                         return Container(
                           color: Colors.transparent,
-                          // padding: const EdgeInsets.all(20),
-                          // margin: const EdgeInsets.all(20),
                           child: Column(
-                            //crossAxisAlignment: CrossAxisAlignment.center,
-                            //mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(snapshot.data!.cityName,
                                   style: Theme.of(context)
@@ -89,21 +85,21 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                                       .displaySmall
                                       ?.copyWith(
                                           fontWeight: FontWeight.w300,
-                                          color: Colors.white)),
+                                          color: ColorsConstants.whiteColor)),
                               Text('${snapshot.data!.temperature.toInt()}°',
                                   style: Theme.of(context)
                                       .textTheme
                                       .displaySmall
                                       ?.copyWith(
                                           fontWeight: FontWeight.w300,
-                                          color: Colors.white)),
+                                          color: ColorsConstants.whiteColor)),
                               Text(snapshot.data!.description,
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleMedium
                                       ?.copyWith(
                                           fontWeight: FontWeight.w400,
-                                          color: Colors.white70)),
+                                          color: ColorsConstants.whiteColor70)),
 
                               // Text(snapshot.data!.humidity.toString()),
                               // Text(snapshot.data!.windSpeed.toString()),
@@ -123,16 +119,16 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
 
   PreferredSize search_widget() {
     return PreferredSize(
-        preferredSize: Size.fromHeight(50),
+        preferredSize: const Size.fromHeight(50),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: PaddingConstants().paddingSearchView,
           child: TextField(
             style: Theme.of(context)
                 .textTheme
                 .titleSmall
-                ?.copyWith(color: Colors.white,fontWeight: FontWeight.normal),
+                ?.copyWith(color:ColorsConstants.whiteColor,fontWeight: FontWeight.normal),
             decoration: InputDecoration(
-                hintText: 'Search',
+                hintText: StringConstants.search,
                 prefixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10))),
