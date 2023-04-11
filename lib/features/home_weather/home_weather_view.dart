@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:weather_app/features/home_weather/search_delegate.dart';
 import 'package:weather_app/product/services/current_weather_manager.dart';
 import '../../product/models/current_weather.dart';
 import 'settings_provider.dart';
@@ -45,12 +46,10 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
               ),
             ),
       child: Scaffold(
-          backgroundColor:ColorsConstants.transparent,
+          backgroundColor: ColorsConstants.transparent,
           appBar: AppBar(
             title: const Text(StringConstants.appTitle),
             backgroundColor: ColorsConstants.transparent,
-            toolbarHeight: 150,
-            bottom: search_widget(),
             actions: [
               ref.watch(settingsProvider).isDarkTheme
                   ? IconButton(
@@ -64,7 +63,15 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                       onPressed: () {
                         _showModalBottomSheet(context);
                       },
-                    )
+                    ),
+              IconButton(
+                  onPressed: () {
+                    showSearch(context: context, delegate: CitySearch());
+                  },
+                  icon: Icon(
+                    Icons.search,
+                    color: ColorsConstants.whiteColor,
+                  ))
             ],
           ),
           body: Center(
@@ -115,25 +122,6 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
             ),
           )),
     );
-  }
-
-  PreferredSize search_widget() {
-    return PreferredSize(
-        preferredSize: const Size.fromHeight(50),
-        child: Padding(
-          padding: PaddingConstants().paddingSearchView,
-          child: TextField(
-            style: Theme.of(context)
-                .textTheme
-                .titleSmall
-                ?.copyWith(color:ColorsConstants.whiteColor,fontWeight: FontWeight.normal),
-            decoration: InputDecoration(
-                hintText: StringConstants.search,
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10))),
-          ),
-        ));
   }
 
   Future<dynamic> _showModalBottomSheet(BuildContext context) {
