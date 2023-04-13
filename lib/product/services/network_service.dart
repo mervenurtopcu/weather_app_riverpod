@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:weather_app/product/models/forecast_weather.dart';
 import '../models/current_weather.dart';
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
@@ -53,17 +54,23 @@ class NetworkService {
     }
     return null;
   }
-    Future fetchForecastData({required String city}) async {
-    String url =  '$openWeatherMapUrl/forecast?'
-        'q=$city&units=metric&appid={YOUR_API_KEY}';
-      var response = await http.get(Uri.parse(url));
+    Future<List<ForecastData>?> fetchForecastData({required String city}) async {
+      try{
+        final response = await _dio.get(
+            'https://api.openweathermap.org/data/2.5/forecast?q=$city&appid=$apiKey&units=metric');
+        if (response.statusCode == HttpStatus.ok) {
 
-    if (response.statusCode == 200) {
+          List<ForecastData> forecastData = (response.data['list'] as List)
+              .map((e) => ForecastData.fromJson(e))
+              .toList();
+          return forecastData;
+        }
+      } on DioError catch (e) {
+        _ShowDebug.showDioError(e, this);
 
-       return json.decode(response.body)['list'];
-    } else {
-      print('Request failed with status: ${response.statusCode}.');
-    }
+      }
+      return null;
+
     }
 
  }

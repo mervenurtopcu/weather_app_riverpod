@@ -2,10 +2,12 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
 @immutable
-class Weather extends Equatable {
+class Weather  {
   final String cityName;
   final String description;
   final double temperature;
+  final double minTemperature;
+  final double maxTemperature;
   final int humidity;
   final double windSpeed;
   final String iconCode;
@@ -14,6 +16,8 @@ class Weather extends Equatable {
     required this.cityName,
     required this.description,
     required this.temperature,
+    required this.minTemperature,
+    required this.maxTemperature,
     required this.humidity,
     required this.windSpeed,
     required this.iconCode,
@@ -25,21 +29,14 @@ class Weather extends Equatable {
       cityName: json['name'],
       description: json['weather'][0]['description'],
       temperature: json['main']['temp'].toDouble(),
+      minTemperature: json['main']['temp_min'].toDouble(),
+      maxTemperature: json['main']['temp_max'].toDouble(),
       humidity: json['main']['humidity'],
       windSpeed: json['wind']['speed'].toDouble(),
       iconCode: json['weather'][0]['icon'],
     );
   }
 
-  @override
-  List<Object?> get props => [
-        cityName,
-        description,
-        temperature,
-        humidity,
-        windSpeed,
-        iconCode,
-      ];
 
   Widget getWeatherIcon(iconCode) {
       if(iconCode == '01d' || iconCode == '01n') {
