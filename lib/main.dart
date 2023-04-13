@@ -24,6 +24,7 @@ class MyApp extends ConsumerWidget {
       theme: ref.watch(settingsProvider).isDarkTheme ? DarkTheme.darkTheme :LightTheme.lightTheme,
       debugShowCheckedModeBanner: false,
         home:const HomeWeatherView()
+
     );
   }
 }

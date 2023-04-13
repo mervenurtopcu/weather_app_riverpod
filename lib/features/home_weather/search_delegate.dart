@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:weather_app/features/home_weather/settings_provider.dart';
 
 import 'package:weather_app/product/services/network_service.dart';
 
+import '../../product/constants/color_constants.dart';
 import '../../product/models/current_weather.dart';
+
+part 'search_delegate.g.dart';
 
 class CitySearch extends SearchDelegate<String> {
   @override
@@ -52,7 +57,7 @@ class CitySearch extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) => Container(
-        color: Colors.black,
+        color: Colors.transparent,
         child: FutureBuilder<List<String>>(
           future: NetworkService.searchCities(query: query),
           builder: (context, snapshot) {
@@ -75,7 +80,7 @@ class CitySearch extends SearchDelegate<String> {
   Widget buildNoSuggestions() => const Center(
         child: Text(
           'No suggestions!',
-          style: TextStyle(fontSize: 28, color: Colors.white),
+          style: TextStyle(fontSize: 18, color: Colors.blueGrey),
         ),
       );
 
@@ -96,7 +101,7 @@ class CitySearch extends SearchDelegate<String> {
               text: TextSpan(
                 text: queryText,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: Colors.blueGrey,
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -104,7 +109,7 @@ class CitySearch extends SearchDelegate<String> {
                   TextSpan(
                     text: remainingText,
                     style: const TextStyle(
-                      color: Colors.white54,
+                      color: Colors.grey,
                       fontSize: 18,
                     ),
                   ),
@@ -115,64 +120,4 @@ class CitySearch extends SearchDelegate<String> {
         },
       );
 
-  Widget buildResultSuccess(Weather weather) => Scaffold(
-        body: Stack(children: [
-          Center(
-            child: Container(
-              height: double.infinity,
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Color(0xFF3279e2), Colors.purple],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-              child: ListView(
-                padding: const EdgeInsets.all(64),
-                children: [
-                  buildDegrees(weather),
-                  Text(
-                    weather.cityName,
-                    style: const TextStyle(
-                      fontSize: 32,
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 72),
-                  Text(
-                    weather.description,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      color: Colors.white70,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 32),
-                  weather.getWeatherIcon(weather.iconCode)
-                ],
-              ),
-            ),
-          ),
-        ]),
-      );
-
-  Widget buildDegrees(Weather weather) {
-    const style = TextStyle(
-      fontSize: 40,
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
-    );
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Opacity(
-          opacity: 0,
-          child: Text('°', style: style),
-        ),
-        Text('${weather.temperature.toInt()}°', style: style),
-      ],
-    );
-  }
 }

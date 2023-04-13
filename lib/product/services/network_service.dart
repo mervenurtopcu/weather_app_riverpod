@@ -53,21 +53,20 @@ class NetworkService {
     }
     return null;
   }
+    Future fetchForecastData({required String city}) async {
+    String url =  '$openWeatherMapUrl/forecast?'
+        'q=$city&units=metric&appid={YOUR_API_KEY}';
+      var response = await http.get(Uri.parse(url));
 
-   Future<Weather?> getWeatherWithCityName(String cityName) async {
-    try {
-      Response response = await _dio.get(
-          '$openWeatherMapUrl?q=$cityName&appid=$apiKey&units=metric');
-      if (response.statusCode == HttpStatus.ok) {
-        Weather weather = Weather.fromJson(response.data);
-        return weather;
-      }
-    } on DioError catch (e) {
-      _ShowDebug.showDioError(e, this);
+    if (response.statusCode == 200) {
+
+       return json.decode(response.body)['list'];
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
     }
-    return null;
-  }
-}
+    }
+
+ }
 
 class _ShowDebug {
   static void showDioError<T>(DioError error, T type) {
