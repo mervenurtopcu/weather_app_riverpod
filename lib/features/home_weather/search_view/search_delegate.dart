@@ -45,8 +45,8 @@ class CitySearch extends SearchDelegate<String> {
                   color: Colors.black,
                   alignment: Alignment.center,
                   child: const Text(
-                    'Something went wrong!',
-                    style: TextStyle(fontSize: 28, color: Colors.white),
+                    StringConstants.error,
+                    style: TextStyle(fontSize: 28, color: ColorsConstants.whiteColor),
                   ),
                 );
               } else {
@@ -66,7 +66,7 @@ class CitySearch extends SearchDelegate<String> {
 
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return const Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator(color: ColorsConstants.whiteColor,strokeWidth: 2,));
               default:
                 if (snapshot.hasError || snapshot.data == null) {
                   return buildNoSuggestions();
@@ -80,8 +80,8 @@ class CitySearch extends SearchDelegate<String> {
 
   Widget buildNoSuggestions() => const Center(
         child: Text(
-          'No suggestions!',
-          style: TextStyle(fontSize: 18, color: Colors.blueGrey),
+          StringConstants.noSuggestions,
+          style: TextStyle(fontSize: 18, color: ColorsConstants.blackColor),
         ),
       );
 
@@ -102,7 +102,7 @@ class CitySearch extends SearchDelegate<String> {
               text: TextSpan(
                 text: queryText,
                 style: const TextStyle(
-                  color: Colors.blueGrey,
+                  color: ColorsConstants.blackColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),
@@ -110,7 +110,7 @@ class CitySearch extends SearchDelegate<String> {
                   TextSpan(
                     text: remainingText,
                     style: const TextStyle(
-                      color: Colors.grey,
+                      color: ColorsConstants.greyColor,
                       fontSize: 18,
                     ),
                   ),

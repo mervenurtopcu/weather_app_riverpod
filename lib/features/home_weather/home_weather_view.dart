@@ -69,7 +69,7 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                   onPressed: () {
                     showSearch(context: context, delegate: CitySearch());
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.search,
                     color: ColorsConstants.whiteColor,
                   ))
@@ -90,8 +90,7 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                       } else {
                         return const Center(
                             child: CircularProgressIndicator(
-                          color: Colors.white,
-                          strokeWidth: 2,
+                              color: ColorsConstants.whiteColor,strokeWidth: 2,
                         ));
                       }
                     }),
@@ -111,16 +110,16 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                           ConnectionState.waiting) {
                         return const Center(
                           child: CircularProgressIndicator(
-                              color: Colors.white, strokeWidth: 2),
+                            color: ColorsConstants.whiteColor,strokeWidth: 2,),
                         );
                       } else {
-                        return const Center(child: Text(StringConstants.error));
+                        return const Center(child: Text(StringConstants.noData));
                       }
                     }),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: Text(StringConstants.forecast,
+                padding: PaddingConstants.paddingGeneral,
+                child: const Text(StringConstants.forecast,
                     style: TextStyle(
                         fontSize: 15, color: ColorsConstants.whiteColor)),
               ),

@@ -9,5 +9,7 @@ class StringConstants {
   static const String appTitle = 'Weather';
   static const String search = 'Search';
   static const String forecast = '5 Days Forecast';
-  static const String error = 'No data';
+  static const String noData = 'No data';
+  static const String error = 'Something went wrong!';
+  static const String noSuggestions = 'No suggestions!';
 }
