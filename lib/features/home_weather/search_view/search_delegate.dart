@@ -46,7 +46,8 @@ class CitySearch extends SearchDelegate<String> {
                   alignment: Alignment.center,
                   child: const Text(
                     StringConstants.error,
-                    style: TextStyle(fontSize: 28, color: ColorsConstants.whiteColor),
+                    style: TextStyle(
+                        fontSize: 28, color: ColorsConstants.whiteColor),
                   ),
                 );
               } else {
@@ -66,7 +67,11 @@ class CitySearch extends SearchDelegate<String> {
 
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return const Center(child: CircularProgressIndicator(color: ColorsConstants.whiteColor,strokeWidth: 2,));
+                return const Center(
+                    child: CircularProgressIndicator(
+                  color: ColorsConstants.whiteColor,
+                  strokeWidth: 2,
+                ));
               default:
                 if (snapshot.hasError || snapshot.data == null) {
                   return buildNoSuggestions();
@@ -120,5 +125,4 @@ class CitySearch extends SearchDelegate<String> {
           );
         },
       );
-
 }

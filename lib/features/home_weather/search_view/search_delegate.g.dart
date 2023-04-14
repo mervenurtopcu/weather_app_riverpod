@@ -61,15 +61,18 @@ class _fiveDaysForecast extends StatelessWidget {
               List<ForecastData>? _dataList = snapshot.data;
               final now = DateTime.now();
               String dayName = DateFormat.E().format(now);
-              return FiveDaysForecastListview(dataList: _dataList, dayName: dayName);
+              return FiveDaysForecastListview(
+                  dataList: _dataList, dayName: dayName);
             }
           }
-          return const Center(child: CircularProgressIndicator(color: ColorsConstants.whiteColor,strokeWidth: 2,));
+          return const Center(
+              child: CircularProgressIndicator(
+            color: ColorsConstants.whiteColor,
+            strokeWidth: 2,
+          ));
         });
   }
 }
-
-
 
 class hourly_suggestion extends StatelessWidget {
   const hourly_suggestion({
@@ -91,12 +94,20 @@ class hourly_suggestion extends StatelessWidget {
               List<ForecastData>? _dataList = snapshot.data;
               return HourlyListView(itemCount: 12, dataList: _dataList);
             } else if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator(color: ColorsConstants.whiteColor,strokeWidth: 2,));
+              return const Center(
+                  child: CircularProgressIndicator(
+                color: ColorsConstants.whiteColor,
+                strokeWidth: 2,
+              ));
             } else {
               return const Center(child: Text(StringConstants.noData));
             }
           }
-          return const Center(child: CircularProgressIndicator(color: ColorsConstants.whiteColor,strokeWidth: 2,));
+          return const Center(
+              child: CircularProgressIndicator(
+            color: ColorsConstants.whiteColor,
+            strokeWidth: 2,
+          ));
         });
   }
 }

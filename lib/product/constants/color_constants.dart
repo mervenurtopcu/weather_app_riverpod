@@ -10,4 +10,5 @@ class ColorsConstants {
   static const Color transparent = Colors.transparent;
   static const Color blackColor = Colors.black;
   static const Color greyColor = Colors.grey;
+  static const Color yellowColor = Colors.yellow;
 }

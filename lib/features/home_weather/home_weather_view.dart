@@ -60,7 +60,10 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                       },
                     )
                   : IconButton(
-                      icon: const Icon(Icons.wb_sunny_outlined),
+                      icon: const Icon(
+                        Icons.wb_sunny_outlined,
+                        color: ColorsConstants.yellowColor,
+                      ),
                       onPressed: () {
                         _showModalBottomSheet(context);
                       },
@@ -90,7 +93,8 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                       } else {
                         return const Center(
                             child: CircularProgressIndicator(
-                              color: ColorsConstants.whiteColor,strokeWidth: 2,
+                          color: ColorsConstants.whiteColor,
+                          strokeWidth: 2,
                         ));
                       }
                     }),
@@ -110,10 +114,13 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                           ConnectionState.waiting) {
                         return const Center(
                           child: CircularProgressIndicator(
-                            color: ColorsConstants.whiteColor,strokeWidth: 2,),
+                            color: ColorsConstants.whiteColor,
+                            strokeWidth: 2,
+                          ),
                         );
                       } else {
-                        return const Center(child: Text(StringConstants.noData));
+                        return const Center(
+                            child: Text(StringConstants.noData));
                       }
                     }),
               ),
