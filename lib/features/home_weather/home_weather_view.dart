@@ -8,7 +8,7 @@ import '../../product/constants/index.dart';
 import '../../../product/widgets/index.dart';
 import '../../../product/global/geoLocator/index.dart';
 import '../../../product/models/index.dart';
-
+import '../../../product/shimmers/index.dart';
 class HomeWeatherView extends ConsumerStatefulWidget {
   const HomeWeatherView({
     Key? key,
@@ -91,11 +91,7 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                       } else if (snapshot.hasError) {
                         return Text('${snapshot.error}');
                       } else {
-                        return const Center(
-                            child: CircularProgressIndicator(
-                          color: ColorsConstants.whiteColor,
-                          strokeWidth: 2,
-                        ));
+                        return const ShimmerWeatherInformation();
                       }
                     }),
               ),
@@ -112,12 +108,7 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                             itemCount: 12, dataList: _dataList);
                       } else if (snapshot.connectionState ==
                           ConnectionState.waiting) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: ColorsConstants.whiteColor,
-                            strokeWidth: 2,
-                          ),
-                        );
+                        return const ShimmerHourlyListView();
                       } else {
                         return const Center(
                             child: Text(StringConstants.noData));
@@ -144,11 +135,7 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                           return FiveDaysForecastListview(
                               dataList: _dataList, dayName: dayName);
                         }
-                        return const Center(
-                            child: CircularProgressIndicator(
-                          color: Colors.white,
-                          strokeWidth: 2,
-                        ));
+                        return ShimmerFiveDaysForecast();
                       }))
             ],
           )),

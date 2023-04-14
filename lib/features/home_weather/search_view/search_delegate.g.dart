@@ -65,11 +65,7 @@ class _fiveDaysForecast extends StatelessWidget {
                   dataList: _dataList, dayName: dayName);
             }
           }
-          return const Center(
-              child: CircularProgressIndicator(
-            color: ColorsConstants.whiteColor,
-            strokeWidth: 2,
-          ));
+          return const ShimmerFiveDaysForecast();
         });
   }
 }
@@ -93,21 +89,11 @@ class hourly_suggestion extends StatelessWidget {
             if (snapshot.hasData) {
               List<ForecastData>? _dataList = snapshot.data;
               return HourlyListView(itemCount: 12, dataList: _dataList);
-            } else if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                  child: CircularProgressIndicator(
-                color: ColorsConstants.whiteColor,
-                strokeWidth: 2,
-              ));
-            } else {
+            }  else {
               return const Center(child: Text(StringConstants.noData));
             }
           }
-          return const Center(
-              child: CircularProgressIndicator(
-            color: ColorsConstants.whiteColor,
-            strokeWidth: 2,
-          ));
+          return const ShimmerHourlyListView();
         });
   }
 }

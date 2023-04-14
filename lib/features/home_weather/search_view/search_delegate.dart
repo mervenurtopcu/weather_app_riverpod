@@ -7,6 +7,7 @@ import '../../../product/models/current_weather.dart';
 import 'package:intl/intl.dart';
 import '../../../product/constants/index.dart';
 import '../../../product/widgets/index.dart';
+import '../../../product/shimmers/index.dart';
 
 part 'search_delegate.g.dart';
 
