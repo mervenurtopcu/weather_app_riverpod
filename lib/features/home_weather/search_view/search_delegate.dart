@@ -4,7 +4,9 @@ import 'package:weather_app/features/home_weather/theme_provider.dart';
 import 'package:weather_app/product/models/forecast_weather.dart';
 
 import 'package:weather_app/product/services/network_service.dart';
+import 'package:weather_app/product/widgets/five_days_forecast_listview.dart';
 import 'package:weather_app/product/widgets/hourly_list_view.dart';
+import 'package:weather_app/product/widgets/weather_information.dart';
 
 import '../../../product/constants/color_constants.dart';
 import '../../../product/models/current_weather.dart';

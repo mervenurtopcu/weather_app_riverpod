@@ -22,7 +22,7 @@ Widget buildResultSuccess(Weather weather) =>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(flex: 2, child: _weatherInformation(weather)),
+            Expanded(flex: 2, child: WeatherInformation(weather: weather)),
             Expanded(
               flex: 2,
               child: hourly_suggestion(
@@ -62,52 +62,7 @@ class _fiveDaysForecast extends StatelessWidget {
 
               final now = DateTime.now();
               String dayName = DateFormat.E().format(now);
-              return ListView.separated(
-                itemCount: _dataList!.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    color: Colors.black.withOpacity(0.5),
-                    margin: const EdgeInsets.all(8),
-                    child: ListTile(
-                      title: Text(
-                          dayName ==
-                                  DateFormat.E().format(
-                                      _dataList[index].dateTime)
-                              ? 'Today'
-                              : DateFormat.EEEE()
-                                  .format(_dataList[index].dateTime),
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: ColorsConstants.whiteColor)),
-                      leading: _dataList[index].dateTime.hour >= 0 &&
-                              _dataList[index].dateTime.hour <= 6
-                          ? const Icon(
-                              Icons.nights_stay,
-                              color: Colors.white,
-                            )
-                          : SizedBox(
-                              height: 30,
-                              child: getWeatherIcon(
-                                  _dataList[index].iconCode)),
-                      subtitle:
-                          Text('${_dataList[index].dateTime.hour}:00',
-                              style: TextStyle(
-                                  //fontSize: 20,
-                                  color: ColorsConstants.whiteColor)),
-                      trailing: Text(
-                        'min: ${_dataList[index].minTemperature.toInt()}°' +
-                            '\nmax: ${_dataList[index].maxTemperature.toInt()}°',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(
-                    width: 10,
-                  );
-                },
-              );
+              return FiveDaysForecastListview(dataList: _dataList, dayName: dayName);
             }
           }
           return const Center(child: CircularProgressIndicator());
@@ -115,27 +70,7 @@ class _fiveDaysForecast extends StatelessWidget {
   }
 }
 
-Padding _weatherInformation(Weather weather) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 20),
-    child: Center(
-      child: Column(
-        children: [
-          //SizedBox(height: 100, child: getWeatherIcon(weather.iconCode)),
-          Text(weather.cityName,
-              style:
-                  TextStyle(fontSize: 20, color: ColorsConstants.whiteColor)),
-          Text('${weather.temperature.toInt()}°',
-              style:
-                  TextStyle(fontSize: 30, color: ColorsConstants.whiteColor)),
-          Text(weather.description,
-              style:
-                  TextStyle(fontSize: 20, color: ColorsConstants.whiteColor70)),
-        ],
-      ),
-    ),
-  );
-}
+
 
 class hourly_suggestion extends StatelessWidget {
   const hourly_suggestion({
