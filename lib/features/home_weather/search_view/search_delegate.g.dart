@@ -29,8 +29,8 @@ Widget buildResultSuccess(Weather weather) =>
                   forecastData: forecastData, isDarkTheme: isDarkTheme),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 16.0),
-              child: Text('5 Days Forecast',
+              padding: PaddingConstants.paddingGeneral,
+              child: Text(StringConstants.forecast,
                   style: TextStyle(
                       fontSize: 15, color: ColorsConstants.whiteColor)),
             ),
@@ -59,13 +59,12 @@ class _fiveDaysForecast extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData) {
               List<ForecastData>? _dataList = snapshot.data;
-
               final now = DateTime.now();
               String dayName = DateFormat.E().format(now);
               return FiveDaysForecastListview(dataList: _dataList, dayName: dayName);
             }
           }
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator(color: Colors.white,strokeWidth: 2,));
         });
   }
 }
@@ -94,10 +93,10 @@ class hourly_suggestion extends StatelessWidget {
             } else if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
             } else {
-              return const Center(child: Text('No data'));
+              return const Center(child: Text(StringConstants.error));
             }
           }
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator(color: Colors.white,strokeWidth: 2,));
         });
   }
 }

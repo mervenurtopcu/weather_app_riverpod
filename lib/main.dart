@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/features/home_weather/home_weather_view.dart';
-import 'package:weather_app/product/global/theme/dark_theme.dart';
-import 'package:weather_app/product/global/theme/light_theme.dart';
 import 'features/home_weather/theme_provider.dart';
-
+import '../../../product/global/theme/index.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));

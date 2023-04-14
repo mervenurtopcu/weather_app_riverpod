@@ -1,12 +1,13 @@
-import 'dart:ui';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_app/features/home_weather/search_view/search_delegate.dart';
-import 'package:weather_app/product/global/geoLocator/current_weather_manager.dart';
-import '../../product/models/current_weather.dart';
+import '../../product/services/network_service.dart';
 import 'theme_provider.dart';
 import '../../product/constants/index.dart';
+import '../../../product/widgets/index.dart';
+import '../../../product/global/geoLocator/index.dart';
+import '../../../product/models/index.dart';
 
 class HomeWeatherView extends ConsumerStatefulWidget {
   const HomeWeatherView({
@@ -18,7 +19,7 @@ class HomeWeatherView extends ConsumerStatefulWidget {
 }
 
 class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
-  late Future<Weather?> weather;
+  late Future<Weather> weather;
   WeatherManager weatherManager = WeatherManager();
 
   @override
@@ -74,52 +75,76 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                   ))
             ],
           ),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                FutureBuilder(
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                flex: 2,
+                child: FutureBuilder<Weather>(
                     future: weather,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        return Container(
-                          color: Colors.transparent,
-                          child: Column(
-                            children: [
-                              Text(snapshot.data!.cityName,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displaySmall
-                                      ?.copyWith(
-                                          fontWeight: FontWeight.w300,
-                                          color: ColorsConstants.whiteColor)),
-                              Text('${snapshot.data!.temperature.toInt()}°',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displaySmall
-                                      ?.copyWith(
-                                          fontWeight: FontWeight.w300,
-                                          color: ColorsConstants.whiteColor)),
-                              Text(snapshot.data!.description,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
-                                      ?.copyWith(
-                                          fontWeight: FontWeight.w400,
-                                          color: ColorsConstants.whiteColor70)),
-
-                              // Text(snapshot.data!.humidity.toString()),
-                              // Text(snapshot.data!.windSpeed.toString()),
-                              // Image.network('https://openweathermap.org/img/w/${snapshot.data!.iconCode}.png'),
-                            ],
-                          ),
+                        return WeatherInformation(weather: snapshot.data!);
+                      } else if (snapshot.hasError) {
+                        return Text('${snapshot.error}');
+                      } else {
+                        return const Center(
+                            child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ));
+                      }
+                    }),
+              ),
+              Expanded(
+                flex: 2,
+                child: FutureBuilder<List<ForecastData>?>(
+                    future: weatherManager.sendPositionToService().then(
+                        (value) => NetworkService()
+                            .fetchForecastData(city: value.cityName)),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        List<ForecastData>? _dataList = snapshot.data;
+                        return HourlyListView(
+                            itemCount: 12, dataList: _dataList);
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                              color: Colors.white, strokeWidth: 2),
                         );
                       } else {
-                        return const CircularProgressIndicator();
+                        return const Center(child: Text(StringConstants.error));
                       }
-                    })
-              ],
-            ),
+                    }),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: Text(StringConstants.forecast,
+                    style: TextStyle(
+                        fontSize: 15, color: ColorsConstants.whiteColor)),
+              ),
+              Expanded(
+                  flex: 4,
+                  child: FutureBuilder<List<ForecastData>?>(
+                      future: weatherManager.sendPositionToService().then(
+                          (value) => NetworkService()
+                              .fetchForecastData(city: value.cityName)),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          List<ForecastData>? _dataList = snapshot.data;
+                          final now = DateTime.now();
+                          String dayName = DateFormat.E().format(now);
+                          return FiveDaysForecastListview(
+                              dataList: _dataList, dayName: dayName);
+                        }
+                        return const Center(
+                            child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ));
+                      }))
+            ],
           )),
     );
   }
@@ -149,7 +174,7 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                           ?.copyWith(fontWeight: FontWeight.bold),
                     ),
                     Padding(
-                      padding: PaddingConstants().paddingGeneral,
+                      padding: PaddingConstants.paddingGeneral,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

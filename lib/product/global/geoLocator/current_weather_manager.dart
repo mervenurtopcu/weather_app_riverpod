@@ -8,7 +8,7 @@ class WeatherManager {
   GeoLocatorManager location = GeoLocatorManager();
   NetworkService service = NetworkService();
 
-  Future<Weather?> sendPositionToService() async {
+  Future<Weather> sendPositionToService() async {
     Position position = await location.determinePosition();
     var lat = position.latitude.toString();
     var lon = position.longitude.toString();

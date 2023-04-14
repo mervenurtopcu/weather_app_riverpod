@@ -36,7 +36,7 @@ class NetworkService {
     return Weather.fromJson(body);
   }
 
-  Future<Weather?> getWeather(String lat, String lon) async {
+  Future<Weather> getWeather(String lat, String lon) async {
     try {
       Response response = await _dio.get(
           '$openWeatherMapUrl?lat=$lat&lon=$lon&appid=$apiKey&units=metric');
@@ -46,8 +46,8 @@ class NetworkService {
       }
     } on DioError catch (e) {
       _ShowDebug.showDioError(e, this);
-    }
-    return null;
+    }throw Exception('Failed to load weather');
+
   }
 
   Future<List<ForecastData>?> fetchForecastData({required String city}) async {
