@@ -20,5 +20,5 @@ Widget getWeatherIcon(iconCode) {
   } else if(iconCode == '50d' || iconCode == '50n') {
     return Image.asset('assets/weather_icons/ic_mist.png');
   }
-  return Image.asset('assets/background_dark.jpg');
+  return Icon(Icons.error);
 }

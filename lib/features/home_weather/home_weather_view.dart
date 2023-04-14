@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:weather_app/features/home_weather/search_delegate.dart';
-import 'package:weather_app/product/services/current_weather_manager.dart';
+import 'package:weather_app/features/home_weather/search_view/search_delegate.dart';
+import 'package:weather_app/product/global/geoLocator/current_weather_manager.dart';
 import '../../product/models/current_weather.dart';
-import 'settings_provider.dart';
+import 'theme_provider.dart';
 import '../../product/constants/index.dart';
 
 class HomeWeatherView extends ConsumerStatefulWidget {

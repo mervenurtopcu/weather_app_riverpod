@@ -6,7 +6,7 @@ void main() {
     setUp(() {
 
     });
-    test('Sample Test', () async{
+    test('fetchForecastData Test', () async{
       var response=await networkService.fetchForecastData(city: 'Adana');
       expect(response, isNotNull);
 

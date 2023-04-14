@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather_app/features/home_weather/home_weather_view.dart';
 import 'package:weather_app/product/global/theme/dark_theme.dart';
 import 'package:weather_app/product/global/theme/light_theme.dart';
-import 'features/home_weather/settings_provider.dart';
+import 'features/home_weather/theme_provider.dart';
 
 
 void main() {

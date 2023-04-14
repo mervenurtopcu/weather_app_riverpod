@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/product/models/current_weather.dart';
 import 'package:weather_app/product/services/network_service.dart';
-import '../global/geoLocator/geoLocator_manager.dart';
+import 'geoLocator_manager.dart';
 
 class WeatherManager {
   GeoLocatorManager location = GeoLocatorManager();

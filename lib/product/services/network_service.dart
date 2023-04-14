@@ -28,18 +28,13 @@ class NetworkService {
     }).toList();
   }
 
-
   static Future<Weather> getWeathers({required String city}) async {
-    final url =
-        '$openWeatherMapUrl?q=$city&units=metric&appid=$apiKey';
+    final url = '$openWeatherMapUrl?q=$city&units=metric&appid=$apiKey';
 
     final response = await http.get(Uri.parse(url));
     final body = json.decode(response.body);
     return Weather.fromJson(body);
-
-
   }
-
 
   Future<Weather?> getWeather(String lat, String lon) async {
     try {
@@ -54,26 +49,23 @@ class NetworkService {
     }
     return null;
   }
-    Future<List<ForecastData>?> fetchForecastData({required String city}) async {
-      try{
-        final response = await _dio.get(
-            'https://api.openweathermap.org/data/2.5/forecast?q=$city&appid=$apiKey&units=metric');
-        if (response.statusCode == HttpStatus.ok) {
 
-          List<ForecastData> forecastData = (response.data['list'] as List)
-              .map((e) => ForecastData.fromJson(e))
-              .toList();
-          return forecastData;
-        }
-      } on DioError catch (e) {
-        _ShowDebug.showDioError(e, this);
-
+  Future<List<ForecastData>?> fetchForecastData({required String city}) async {
+    try {
+      final response = await _dio.get(
+          'https://api.openweathermap.org/data/2.5/forecast?q=$city&appid=$apiKey&units=metric');
+      if (response.statusCode == HttpStatus.ok) {
+        List<ForecastData> forecastData = (response.data['list'] as List)
+            .map((e) => ForecastData.fromJson(e))
+            .toList();
+        return forecastData;
       }
-      return null;
-
+    } on DioError catch (e) {
+      _ShowDebug.showDioError(e, this);
     }
-
- }
+    return null;
+  }
+}
 
 class _ShowDebug {
   static void showDioError<T>(DioError error, T type) {
