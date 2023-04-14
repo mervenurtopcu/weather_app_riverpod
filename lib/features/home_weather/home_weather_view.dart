@@ -47,6 +47,7 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
               ),
             ),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
           backgroundColor: ColorsConstants.transparent,
           appBar: AppBar(
             title: const Text(StringConstants.appTitle),

@@ -87,7 +87,7 @@ class CitySearch extends SearchDelegate<String> {
   Widget buildNoSuggestions() => const Center(
         child: Text(
           StringConstants.noSuggestions,
-          style: TextStyle(fontSize: 18, color: ColorsConstants.blackColor),
+          style: TextStyle(fontSize: 18, color: ColorsConstants.whiteColor),
         ),
       );
 
@@ -108,7 +108,7 @@ class CitySearch extends SearchDelegate<String> {
               text: TextSpan(
                 text: queryText,
                 style: const TextStyle(
-                  color: ColorsConstants.blackColor,
+                  color: ColorsConstants.bluegreyColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 18,
                 ),

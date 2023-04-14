@@ -11,6 +11,6 @@ class ColorsConstants {
   static const Color blackColor = Colors.black;
   static const Color greyColor = Colors.grey;
   static const Color yellowColor = Colors.yellow;
-  static Color shimmerHighlightColor = Colors.grey.shade50;
-  static Color shimmerBaseColor = Colors.grey.shade400;
+  static const Color bluegreyColor = Colors.blueGrey;
+
 }
