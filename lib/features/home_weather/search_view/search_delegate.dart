@@ -84,10 +84,13 @@ class CitySearch extends SearchDelegate<String> {
         ),
       );
 
-  Widget buildNoSuggestions() => const Center(
-        child: Text(
-          StringConstants.noSuggestions,
-          style: TextStyle(fontSize: 18, color: ColorsConstants.whiteColor),
+  Widget buildNoSuggestions() => const SingleChildScrollView(
+        child: Center(
+          child: Text(
+            StringConstants.noSuggestions,
+            style:
+                TextStyle(fontSize: 18, color: ColorsConstants.bluegreyColor),
+          ),
         ),
       );
 

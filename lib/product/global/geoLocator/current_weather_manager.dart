@@ -12,7 +12,7 @@ class WeatherManager {
     Position position = await location.determinePosition();
     var lat = position.latitude.toString();
     var lon = position.longitude.toString();
-    var response= service.getWeather(lat, lon);
+    var response= await service.getWeather(lat, lon);
     return response;
   }
 

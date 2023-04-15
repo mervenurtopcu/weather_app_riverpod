@@ -21,6 +21,7 @@ Widget buildResultSuccess(Weather weather) =>
               )),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(flex: 2, child: WeatherInformation(weather: weather)),
             Expanded(
@@ -45,7 +46,6 @@ Widget buildResultSuccess(Weather weather) =>
 
 class _fiveDaysForecast extends StatelessWidget {
   const _fiveDaysForecast({
-    super.key,
     required this.forecastData,
   });
 
@@ -89,7 +89,7 @@ class hourly_suggestion extends StatelessWidget {
             if (snapshot.hasData) {
               List<ForecastData>? _dataList = snapshot.data;
               return HourlyListView(itemCount: 12, dataList: _dataList);
-            }  else {
+            } else {
               return const Center(child: Text(StringConstants.noData));
             }
           }
