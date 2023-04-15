@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/features/home_weather/search_view/search_delegate.dart';
 import '../../product/services/network_service.dart';
@@ -9,6 +10,7 @@ import '../../../product/widgets/index.dart';
 import '../../../product/global/geoLocator/index.dart';
 import '../../../product/models/index.dart';
 import '../../../product/shimmers/index.dart';
+
 class HomeWeatherView extends ConsumerStatefulWidget {
   const HomeWeatherView({
     Key? key,
@@ -20,12 +22,17 @@ class HomeWeatherView extends ConsumerStatefulWidget {
 
 class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
   late Future<Weather> weather;
-  WeatherManager weatherManager = WeatherManager();
+  late Future<List<ForecastData>?> weatherForecast;
+  late WeatherManager weatherManager;
+
 
   @override
   void initState() {
     super.initState();
+    weatherManager = WeatherManager();
     weather = weatherManager.sendPositionToService();
+    weatherForecast = weather.then(
+        (value) => NetworkService().fetchForecastData(city: value.cityName));
   }
 
   @override
@@ -47,7 +54,7 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
               ),
             ),
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: false,
           backgroundColor: ColorsConstants.transparent,
           appBar: AppBar(
             title: const Text(StringConstants.appTitle),
@@ -89,19 +96,18 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return WeatherInformation(weather: snapshot.data!);
-                      } else if (snapshot.hasError) {
-                        return Text('${snapshot.error}');
-                      } else {
+                      } else if (snapshot.connectionState == ConnectionState.waiting) {
                         return const ShimmerWeatherInformation();
+                      } else {
+                        return const Center(
+                            child: Text(StringConstants.noData));
                       }
                     }),
               ),
               Expanded(
                 flex: 2,
                 child: FutureBuilder<List<ForecastData>?>(
-                    future: weatherManager.sendPositionToService().then(
-                        (value) => NetworkService()
-                            .fetchForecastData(city: value.cityName)),
+                    future: weatherForecast,
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         List<ForecastData>? _dataList = snapshot.data;
@@ -125,9 +131,7 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
               Expanded(
                   flex: 4,
                   child: FutureBuilder<List<ForecastData>?>(
-                      future: weatherManager.sendPositionToService().then(
-                          (value) => NetworkService()
-                              .fetchForecastData(city: value.cityName)),
+                      future: weatherForecast,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           List<ForecastData>? _dataList = snapshot.data;
