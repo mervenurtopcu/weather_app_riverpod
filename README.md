@@ -1,6 +1,6 @@
-# weather_app
+# WEATHER APP 
 
-WEATHER APP
+
 
 ## Getting Started
 
