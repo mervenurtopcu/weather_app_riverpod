@@ -140,7 +140,7 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
                           return FiveDaysForecastListview(
                               dataList: _dataList, dayName: dayName);
                         }
-                        return ShimmerFiveDaysForecast();
+                        return const ShimmerFiveDaysForecast();
                       }))
             ],
           )),

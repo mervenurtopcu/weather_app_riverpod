@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app/product/constants/index.dart';
 import 'package:weather_app/product/models/current_weather.dart';
-import '../constants/color_constants.dart';
 
 @immutable
 class WeatherInformation extends StatelessWidget {
@@ -15,15 +14,24 @@ class WeatherInformation extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            Text(weather.cityName,
-                style:
-                    const TextStyle(fontSize: 20, color: ColorsConstants.whiteColor)),
-            Text('${weather.temperature.toInt()}°',
-                style:
-                    const TextStyle(fontSize: 30, color: ColorsConstants.whiteColor)),
-            Text(weather.description,
-                style: const TextStyle(
-                    fontSize: 20, color: ColorsConstants.whiteColor70)),
+            Expanded(
+              flex: 1,
+              child: Text(weather.cityName,
+                  style:
+                      const TextStyle(fontSize: 20, color: ColorsConstants.whiteColor)),
+            ),
+            Expanded(
+              flex: 1,
+              child: Text('${weather.temperature.toInt()}°',
+                  style:
+                      const TextStyle(fontSize: 30, color: ColorsConstants.whiteColor)),
+            ),
+            Expanded(
+              flex: 1,
+              child: Text(weather.description,
+                  style: const TextStyle(
+                      fontSize: 20, color: ColorsConstants.whiteColor70)),
+            ),
           ],
         ),
       ),
