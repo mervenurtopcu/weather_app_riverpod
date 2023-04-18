@@ -57,7 +57,7 @@ class _HomeWeatherViewState extends ConsumerState<HomeWeatherView> {
           resizeToAvoidBottomInset: false,
           backgroundColor: ColorsConstants.transparent,
           appBar: AppBar(
-            title: const Text(StringConstants.appTitle),
+            title: const Text(StringConstants.appTitle,style: TextStyle(fontFamily: 'Dosis',fontSize: 30),),
             backgroundColor: ColorsConstants.transparent,
             actions: [
               ref.watch(settingsProvider).isDarkTheme
